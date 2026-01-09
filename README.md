@@ -45,14 +45,14 @@ pnpm start
 
 如果您在部署 Cloudflare Pages 时遇到问题，**请立即阅读**：
 
-#### 📄 [QUICK-FIX.md](QUICK-FIX.md) - 30 秒快速修复指南
+#### 📄 [QUICK-FIX.md](QUICK-FIX.md) - 30 秒快速修复指南（新版界面）
 
 包含：
-- 🔴 当前错误的解决方案
-- ✅ 正确的配置步骤
+- 🔴 新版界面的配置要求
+- ✅ 正确的部署命令：`wrangler pages deploy .next`
 - 🎯 配置检查清单
 
-**⚠️ 关键修复**：**完全清空 "Deploy command" 字段**！
+**⚠️ 关键修复**：**部署命令改为 `wrangler pages deploy .next`**！
 
 ---
 
@@ -63,8 +63,12 @@ pnpm start
 - ✅ 全球 CDN 加速
 - ✅ 免费 SSL 证书
 - ✅ 自动从 GitHub 部署
+- ✅ 支持自定义域名
 
-**📋 详细配置指南**：请查看 [CLOUDFLARE-PAGES-CONFIG.md](CLOUDFLARE-PAGES-CONFIG.md) 了解详细的配置步骤和常见错误修复。
+**📋 详细配置指南**：
+- [QUICK-FIX.md](QUICK-FIX.md) - 快速修复指南（新版界面）⭐
+- [CLOUDFLARE-PAGES-NEW-UI.md](CLOUDFLARE-PAGES-NEW-UI.md) - 新版界面详细配置指南
+- [CLOUDFLARE-PAGES-CONFIG.md](CLOUDFLARE-PAGES-CONFIG.md) - 详细的配置步骤和常见错误
 - ✅ 支持自定义域名
 
 #### 部署步骤
@@ -85,22 +89,21 @@ pnpm start
 1. 在 "Connect to Git" 中找到 `ouhaibo1980/my-tvbxo`
 2. 点击 "Begin setup"
 
-**第四步：配置构建设置（⚠️ 重要）**
+**第四步：配置构建设置（⚠️ 重要，新版界面）**
 
+**新版界面配置**：
 ```
-Build command: npm run build
-Build output directory: .next
-Root directory: (留空)
-Deploy command: (留空) ⚠️ 必须留空！
+项目名称: my-tvbxo
+构建命令 (可选): pnpm run build 或 npm run build
+部署命令 (必需): wrangler pages deploy .next ⚠️⚠️⚠️
 ```
 
-**注意**：Cloudflare Pages 会自动检测 Next.js 框架，不需要手动选择 Framework preset。
+**⚠️ 新版界面关键注意事项：**
+- ✅ **构建命令**: `pnpm run build` 或 `npm run build` - 使用预填充的值即可
+- ✅ **部署命令**: `wrangler pages deploy .next` - **必须填写**，这是新版界面的要求
+- ❌ **不要使用**: `npx wrangler deploy` - 这是 Workers 命令，会导致错误
 
-**⚠️ 关键注意事项：**
-- ✅ **Build command**: `npm run build` - 必须填写
-- ✅ **Build output directory**: `.next` - 填写 `.next` 目录
-- ❌ **Deploy command**: **必须留空** - Cloudflare Pages 会自动部署
-- ❌ **不要填写** `npx wrangler deploy` 或其他部署命令
+**注意**：新版 Cloudflare Pages 界面要求部署命令为必需字段。
 
 **环境变量：**
 - `NODE_VERSION`: `20`
