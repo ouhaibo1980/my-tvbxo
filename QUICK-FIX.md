@@ -31,11 +31,12 @@ For Pages, please run `wrangler pages deploy` instead.
 
 | 字段 | 填写内容 | 注意事项 |
 |------|----------|----------|
-| **Framework preset** | 选择 `Next.js` | 从下拉列表选择 |
 | **Build command** | `npm run build` | 完整输入，包括 npm run |
 | **Build output directory** | `.next` 或留空 | 不要添加前导 / |
 | **Root directory** | 留空 | 不要填写任何内容 |
 | **Deploy command** | **删除所有内容，留空** | ⚠️ ⚠️ ⚠️ 最重要！ |
+
+**注意**：Cloudflare Pages 会自动检测 Next.js 框架，不需要手动选择 Framework preset。
 
 ### 第 4 步：保存并部署
 
@@ -49,7 +50,6 @@ For Pages, please run `wrangler pages deploy` instead.
 
 ```
 ┌─────────────────────────────────────────────────────┐
-│ Framework preset:  [Next.js (下拉选择)]            │
 │ Build command:     npm run build                   │
 │ Build output dir:  .next                           │
 │ Root directory:    (空，不要填写)                   │
@@ -61,7 +61,6 @@ For Pages, please run `wrangler pages deploy` instead.
 
 ```
 ┌─────────────────────────────────────────────────────┐
-│ Framework preset:  Next.js                        │
 │ Build command:     npm run build                  │
 │ Build output dir:  .next                           │
 │ Root directory:    (空)                             │
@@ -77,7 +76,6 @@ For Pages, please run `wrangler pages deploy` instead.
 
 - [ ] **Deploy command 字段已完全清空**（没有任何字符）
 - [ ] Build command 是 `npm run build`（不是 `Next.js` 或 `build`）
-- [ ] Framework preset 是 `Next.js`
 - [ ] Build output directory 是 `.next` 或留空
 - [ ] Root directory 留空
 
@@ -111,6 +109,10 @@ For Pages, please run `wrangler pages deploy` instead.
 1. 执行 Build command（`npm run build`）
 2. 读取 Build output directory（`.next`）
 3. 自动将输出目录部署到全球 CDN
+
+### Q: 没有看到 Framework preset 选项？
+
+**A**: 正常！Cloudflare Pages 会自动检测 Next.js 框架，不需要手动选择。
 
 ### Q: 如果我确实需要自定义部署命令怎么办？
 
