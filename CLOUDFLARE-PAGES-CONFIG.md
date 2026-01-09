@@ -1,4 +1,4 @@
-# Cloudflare Pages 配置指南
+# Cloudflare Pages 配置指南（简化版）
 
 ## 🎯 正确的 Cloudflare Pages 配置
 
@@ -6,11 +6,14 @@
 
 | 设置项 | 正确值 | 说明 | 错误示例 |
 |--------|--------|------|----------|
-| **Framework preset** | `Next.js` | 框架预设 | 留空或选择其他 |
 | **Build command** | `npm run build` | 构建命令 | `Next.js`, `npx wrangler deploy`, `build` |
 | **Build output directory** | `.next` 或留空 | 输出目录 | `dist`, `build`, `out` |
 | **Root directory** | 留空 | 根目录 | 填写任何值 |
 | **Deploy command** | 留空（⚠️ 必须留空） | 部署命令 | `npx wrangler deploy`, `npm run deploy` |
+
+**注意**：Cloudflare Pages 会自动检测 Next.js 框架，不需要手动选择 Framework preset。
+
+---
 
 ## ⚠️ 常见错误配置
 
@@ -31,6 +34,7 @@
 ```
 ❌ Deploy command: npx wrangler deploy
 ❌ 错误信息：Missing entry-point to Worker script or to assets directory
+❌ 错误信息：It looks like you've run a Workers-specific command in a Pages project
 ```
 
 **正确配置**：
@@ -50,7 +54,9 @@
 ✅ Build output directory: .next
 ```
 
-## 📋 完整配置步骤（带截图说明）
+---
+
+## 📋 完整配置步骤（简化版）
 
 ### 步骤 1：进入项目设置
 
@@ -68,17 +74,16 @@
 
 您会看到一个表单，请按照以下方式填写：
 
-#### 基本设置部分
+#### 必填字段
 
 | 字段 | 输入值 | 注意事项 |
 |------|--------|----------|
-| Framework preset | 选择 `Next.js` | ⚠️ 不要手动输入，从下拉列表选择 |
-| Build command | 输入 `npm run build` | ⚠️ 必须完整输入，包括 `npm run` |
-| Build output directory | 输入 `.next` 或留空 | ⚠️ 不要添加前导 `/` |
-| Root directory | 留空 | ⚠️ 不要填写任何内容 |
-| Deploy command | **留空** | ⚠️ **最重要：必须留空！** |
+| **Build command** | 输入 `npm run build` | ⚠️ 必须完整输入，包括 `npm run` |
+| **Build output directory** | 输入 `.next` 或留空 | ⚠️ 不要添加前导 `/` |
+| **Root directory** | 留空 | ⚠️ 不要填写任何内容 |
+| **Deploy command** | **留空** | ⚠️ **最重要：必须留空！** |
 
-#### 环境变量部分（Environment variables）
+#### 环境变量部分（Environment variables）- 可选
 
 点击 **Add variable** 添加以下变量：
 
@@ -104,13 +109,14 @@
 3. 选择分支 `main`
 4. 点击 **Save and Deploy**
 
+---
+
 ## 🎨 配置示例
 
 ### 正确配置示例
 
 ```
 ┌─────────────────────────────────────────────┐
-│ Framework preset: Next.js (下拉选择)         │
 │ Build command: npm run build               │
 │ Build output directory: .next              │
 │ Root directory: (留空)                      │
@@ -128,7 +134,6 @@
 
 ```
 ┌─────────────────────────────────────────────┐
-│ Framework preset: Next.js                    │
 │ Build command: Next.js ❌                   │
 │ Build output directory: dist ❌              │
 │ Root directory: src ❌                      │
@@ -136,19 +141,20 @@
 └─────────────────────────────────────────────┘
 ```
 
+---
+
 ## 🔍 验证配置是否正确
 
 ### 检查清单
 
 部署前，请确认：
 
-- [ ] Framework preset 选择为 "Next.js"
 - [ ] Build command 为 `npm run build`（不是 `build` 或 `Next.js`）
 - [ ] Build output directory 为 `.next` 或留空
 - [ ] Root directory 留空
 - [ ] Deploy command **留空**（这是最常见错误）
-- [ ] 已添加 `NODE_VERSION=20` 环境变量
-- [ ] 已添加 `NPM_VERSION=10` 环境变量
+- [ ] 已添加 `NODE_VERSION=20` 环境变量（可选）
+- [ ] 已添加 `NPM_VERSION=10` 环境变量（可选）
 
 ### 测试构建命令
 
@@ -177,6 +183,8 @@ npm run build
 ls -la .next
 ```
 
+---
+
 ## 🚨 故障排除
 
 ### 问题 1：/bin/sh: 1: Next.js: not found
@@ -195,7 +203,15 @@ ls -la .next
 1. 清空 Deploy command 字段
 2. 留空即可
 
-### 问题 3：404 Not Found
+### 问题 3：It looks like you've run a Workers-specific command
+
+**原因**：Deploy command 填写了 `npx wrangler deploy`
+
+**解决**：
+1. 清空 Deploy command 字段
+2. 留空即可
+
+### 问题 4：404 Not Found
 
 **原因**：Build output directory 配置错误
 
@@ -203,7 +219,7 @@ ls -la .next
 1. 将 Build output directory 改为 `.next`
 2. 或留空让 Cloudflare 自动检测
 
-### 问题 4：Build failed
+### 问题 5：Build failed
 
 **原因**：可能是依赖问题或代码错误
 
@@ -211,6 +227,8 @@ ls -la .next
 1. 在本地运行 `npm run build` 检查
 2. 查看构建日志中的错误信息
 3. 修复代码问题后重新提交
+
+---
 
 ## 📞 需要帮助？
 
@@ -237,6 +255,8 @@ ls -la .next
    npm install
    npm run build
    ```
+
+---
 
 ## ✅ 成功标志
 
