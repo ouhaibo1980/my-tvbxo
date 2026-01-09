@@ -1,0 +1,9 @@
+name = "my-tvbxo"
+compatibility_date = "2024-04-01"
+pages_build_output_dir = ".vercel/output/static"
+
+[env.production]
+vars = { NODE_ENV = "production" }
+
+[env.preview]
+vars = { NODE_ENV = "development" }

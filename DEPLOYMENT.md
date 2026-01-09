@@ -4,6 +4,39 @@
 - **Cloudflare Pages** - 免费托管平台，适合纯前端项目
 - **自己的服务器** - 完全控制，适合需要后端服务的项目
 
+## 🚨 快速修复：Cloudflare Pages 部署失败
+
+如果您遇到 `Missing entry-point to Worker script or to assets directory` 错误：
+
+### 问题原因
+错误使用了 `npx wrangler deploy` 命令，这是用于部署 Cloudflare Workers 的，不适用于 Next.js 应用。
+
+### 解决方案（2 分钟内完成）
+
+1. 登录 [Cloudflare Dashboard](https://dash.cloudflare.com/)
+2. 进入 **Workers & Pages** → 选择您的项目 **my-tvbxo**
+3. 点击 **Settings** 标签页
+4. 找到 **Builds & deployments** 部分
+5. 点击 **Edit configurations**
+6. **清空或删除** "Deploy command" 字段
+   - ❌ 不要填写：`npx wrangler deploy`
+   - ✅ 留空即可，Cloudflare Pages 会自动部署
+7. **确认** 其他配置：
+   - ✅ **Build command**: `npm run build`
+   - ✅ **Build output directory**: `.next`（或留空）
+   - ✅ **Root directory**: (留空)
+8. 点击 **Save** 保存更改
+9. 触发一次新的部署（推送代码或手动触发）
+
+### 为什么这样修复？
+
+- Cloudflare Pages 会自动处理 Next.js 应用的部署
+- 只需要执行构建命令（`npm run build`）
+- 不需要额外的部署命令
+- Cloudflare 会自动检测并部署 `.next` 目录
+
+---
+
 ## 目录
 
 - [准备工作](#准备工作)
