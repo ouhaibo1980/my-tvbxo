@@ -41,116 +41,40 @@ pnpm start
 
 ## 部署指南
 
-### ⚠️ 部署失败？快速修复
-
-如果您在部署 Cloudflare Pages 时遇到问题，**请立即阅读**：
-
-#### 📄 [QUICK-FIX.md](QUICK-FIX.md) - 30 秒快速修复指南（新版界面）
-
-包含：
-- 🔴 新版界面的配置要求
-- ✅ 正确的部署命令：`npx wrangler pages deploy .next`
-- 🎯 配置检查清单
-
-**⚠️ 关键修复**：**部署命令改为 `npx wrangler pages deploy .next`（注意前面的 `npx`）**！
-
----
-
-### 方案一：Cloudflare Pages（推荐，免费）
+### Cloudflare Pages（推荐，免费）
 
 优点：
 - ✅ 完全免费，无限带宽
 - ✅ 全球 CDN 加速
 - ✅ 免费 SSL 证书
 - ✅ 自动从 GitHub 部署
-- ✅ 支持自定义域名
 
-**📋 详细配置指南**：
-- [QUICK-FIX.md](QUICK-FIX.md) - 快速修复指南（新版界面）⭐
-- [CLOUDFLARE-PAGES-NEW-UI.md](CLOUDFLARE-PAGES-NEW-UI.md) - 新版界面详细配置指南
-- [CLOUDFLARE-PAGES-CONFIG.md](CLOUDFLARE-PAGES-CONFIG.md) - 详细的配置步骤和常见错误
-- ✅ 支持自定义域名
+**详细步骤和故障排除**：👉 [DEPLOYMENT.md](DEPLOYMENT.md)
 
-#### 部署步骤
+### 快速部署
 
-**第一步：注册 Cloudflare 账号**
-1. 访问：https://dash.cloudflare.com/sign-up
-2. 使用邮箱注册
-3. 验证邮箱
+1. 注册 Cloudflare 账号：https://dash.cloudflare.com/sign-up
+2. 进入 **Workers & Pages** → **Create application** → **Pages** → **Connect to Git**
+3. 选择 `ouhaibo1980/my-tvbxo` 仓库
+4. 配置构建设置：
+   - Build command: `pnpm run build`
+   - Build output directory: `.next`
+   - **Deploy command: (留空)** ⚠️
+5. 点击 **Save and Deploy**
 
-**第二步：连接 GitHub**
-1. 登录后，点击左侧菜单 "Workers & Pages"
-2. 点击 "Create application"
-3. 选择 "Pages" 标签
-4. 点击 "Connect to Git"
-5. 选择 GitHub 并授权访问你的仓库
+部署成功后访问：`https://my-tvbxo.pages.dev`
 
-**第三步：导入项目**
-1. 在 "Connect to Git" 中找到 `ouhaibo1980/my-tvbxo`
-2. 点击 "Begin setup"
+### ⚠️ 部署失败？
 
-**第四步：配置构建设置（⚠️ 重要，新版界面）**
+**Authentication error [code: 10000]**：
 
-**新版界面配置**：
-```
-项目名称: my-tvbxo
-构建命令 (可选): pnpm run build 或 npm run build
-部署命令 (必需): npx wrangler pages deploy .next ⚠️⚠️⚠️
-```
-
-**⚠️ 新版界面关键注意事项：**
-- ✅ **构建命令**: `pnpm run build` 或 `npm run build` - 使用预填充的值即可
-- ✅ **部署命令**: `npx wrangler pages deploy .next` - **必须填写**，注意前面的 `npx`
-- ❌ **不要使用**: `wrangler pages deploy .next`（缺少 `npx`）- 会导致 `wrangler: not found` 错误
-- ❌ **不要使用**: `npx wrangler deploy` - 这是 Workers 命令，会导致 Workers-specific command 错误
-
-**注意**：新版 Cloudflare Pages 界面要求部署命令为必需字段。
-
-**环境变量：**
-- `NODE_VERSION`: `20`
-- `NPM_VERSION`: `10`
-
-**第五步：部署**
-1. 点击 "Save and Deploy"
-2. 等待 2-5 分钟
-3. 访问 `https://my-tvbxo.pages.dev`
-
-### 🚨 快速修复：Cloudflare Pages 部署失败
-
-#### 错误 1：Missing entry-point to Worker script
-
-如果遇到 `Missing entry-point to Worker script or to assets directory` 错误：
-
-**问题原因**：错误使用了 `npx wrangler deploy` 命令。
-
-**解决方案（2 分钟内完成）**：
-
-1. 登录 [Cloudflare Dashboard](https://dash.cloudflare.com/)
-2. 进入 **Workers & Pages** → 选择您的项目 **my-tvbxo**
-3. 点击 **Settings** 标签页
-4. 找到 **Builds & deployments** 部分
-5. 点击 **Edit configurations**
-6. **清空或删除** "Deploy command" 字段（不要填写任何内容）
-7. **确认** 其他配置：
-   - ✅ **Build command**: `npm run build`
-   - ✅ **Build output directory**: `.next`（或留空）
-   - ✅ **Root directory**: (留空)
-8. 点击 **Save** 保存更改
-9. 触发一次新的部署（推送代码或手动触发）
+在 Cloudflare Pages 设置中清空 "Deploy command" 字段，让Cloudflare自动部署.next目录。详见 [DEPLOYMENT.md](DEPLOYMENT.md#错误-1-authentication-error-code-10000)
 
 ---
-
-### 方案二：自己的服务器部署
-
-部署到自己的服务器提供完全的控制权，适合需要运行后端 API 的项目。
-
-详细步骤请查看 [DEPLOYMENT.md](DEPLOYMENT.md)
 
 ## 开发工具
 
 ### 自动提交和推送
-
-项目配置了文件监控自动提交系统：
 
 ```bash
 # 启动自动监控
@@ -163,39 +87,31 @@ pnpm start
 ./manage-auto-commit.sh status
 ```
 
-### SSH 配置
+项目使用SSH密钥进行GitHub认证，文件变化会自动提交并推送。
 
-项目使用 SSH 密钥进行 GitHub 认证，避免 Token 过期问题。
-
-详细配置请查看 [SSH-SETUP.md](SSH-SETUP.md)
+---
 
 ## 故障排除
 
 ### TypeScript 类型错误
 
 ```bash
-# 运行类型检查
 npx tsc --noEmit
 ```
 
 ### 构建失败
 
 ```bash
-# 清理缓存
 rm -rf .next node_modules
 pnpm install
 pnpm build
 ```
 
-### Cloudflare Pages 部署问题
-
-请查看 [DEPLOYMENT.md](DEPLOYMENT.md) 中的详细故障排除章节。
+---
 
 ## 相关文档
 
-- [DEPLOYMENT.md](DEPLOYMENT.md) - 详细部署指南
-- [SSH-SETUP.md](SSH-SETUP.md) - SSH 密钥配置
-- [.coze](.coze) - 项目启动配置
+- [DEPLOYMENT.md](DEPLOYMENT.md) - 详细部署指南和故障排除
 
 ## 贡献
 
