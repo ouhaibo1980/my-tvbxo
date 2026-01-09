@@ -49,10 +49,10 @@ pnpm start
 
 包含：
 - 🔴 新版界面的配置要求
-- ✅ 正确的部署命令：`wrangler pages deploy .next`
+- ✅ 正确的部署命令：`npx wrangler pages deploy .next`
 - 🎯 配置检查清单
 
-**⚠️ 关键修复**：**部署命令改为 `wrangler pages deploy .next`**！
+**⚠️ 关键修复**：**部署命令改为 `npx wrangler pages deploy .next`（注意前面的 `npx`）**！
 
 ---
 
@@ -95,13 +95,14 @@ pnpm start
 ```
 项目名称: my-tvbxo
 构建命令 (可选): pnpm run build 或 npm run build
-部署命令 (必需): wrangler pages deploy .next ⚠️⚠️⚠️
+部署命令 (必需): npx wrangler pages deploy .next ⚠️⚠️⚠️
 ```
 
 **⚠️ 新版界面关键注意事项：**
 - ✅ **构建命令**: `pnpm run build` 或 `npm run build` - 使用预填充的值即可
-- ✅ **部署命令**: `wrangler pages deploy .next` - **必须填写**，这是新版界面的要求
-- ❌ **不要使用**: `npx wrangler deploy` - 这是 Workers 命令，会导致错误
+- ✅ **部署命令**: `npx wrangler pages deploy .next` - **必须填写**，注意前面的 `npx`
+- ❌ **不要使用**: `wrangler pages deploy .next`（缺少 `npx`）- 会导致 `wrangler: not found` 错误
+- ❌ **不要使用**: `npx wrangler deploy` - 这是 Workers 命令，会导致 Workers-specific command 错误
 
 **注意**：新版 Cloudflare Pages 界面要求部署命令为必需字段。
 
@@ -138,33 +139,6 @@ pnpm start
 9. 触发一次新的部署（推送代码或手动触发）
 
 ---
-
-#### 错误 2：Next.js: not found
-
-如果遇到 `/bin/sh: 1: Next.js: not found` 错误：
-
-**问题原因**：Build command 错误地填写为 "Next.js" 而不是 `npm run build`。
-
-**解决方案（1 分钟内完成）**：
-
-1. 登录 [Cloudflare Dashboard](https://dash.cloudflare.com/)
-2. 进入 **Workers & Pages** → 选择您的项目 **my-tvbxo**
-3. 点击 **Settings** 标签页
-4. 找到 **Builds & deployments** 部分
-5. 点击 **Edit configurations**
-6. **修改** "Build command" 字段：
-   - ❌ 删除：`Next.js`（错误）
-   - ✅ 改为：`npm run build`（正确）
-7. 确认其他配置：
-   - ✅ **Build output directory**: `.next`（或留空）
-   - ✅ **Root directory**: (留空)
-   - ✅ **Deploy command**: (留空)
-8. 点击 **Save** 保存更改
-9. 触发一次新的部署（推送代码或手动触发）
-
-**详细文档**：
-- [CLOUDFLARE-PAGES-CONFIG.md](CLOUDFLARE-PAGES-CONFIG.md) - 详细配置指南
-- [DEPLOYMENT.md](DEPLOYMENT.md) - 完整部署指南
 
 ### 方案二：自己的服务器部署
 
