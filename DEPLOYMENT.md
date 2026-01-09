@@ -4,9 +4,29 @@
 - **Cloudflare Pages** - 免费托管平台，适合纯前端项目
 - **自己的服务器** - 完全控制，适合需要后端服务的项目
 
-**📋 重要提示**：查看详细的 Cloudflare Pages 配置步骤和常见错误，请阅读 [CLOUDFLARE-PAGES-CONFIG.md](CLOUDFLARE-PAGES-CONFIG.md)
+---
 
-## 🚨 快速修复：Cloudflare Pages 部署失败
+## ⚠️ 部署失败？先看这里！
+
+如果您正在尝试修复 Cloudflare Pages 部署问题，**请首先阅读**：
+
+### 📄 [QUICK-FIX.md](QUICK-FIX.md) - 30 秒快速修复指南
+
+这个文档包含：
+- 🔴 当前错误的解决方案
+- ✅ 正确的配置步骤
+- 🎯 详细的配置示例
+- 📋 配置检查清单
+
+**⚠️ 重要**：修复 Cloudflare Pages 部署的关键是**完全清空 "Deploy command" 字段**！
+
+---
+
+**📋 更多信息**：
+- [CLOUDFLARE-PAGES-CONFIG.md](CLOUDFLARE-PAGES-CONFIG.md) - 详细的配置步骤和常见错误
+- [QUICK-FIX.md](QUICK-FIX.md) - 快速修复指南（推荐首先阅读）
+
+## 🚨 详细修复说明
 
 ### 错误 1：Missing entry-point to Worker script
 
