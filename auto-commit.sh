@@ -9,8 +9,8 @@
 GIT_NAME="Auto Commit Bot"
 GIT_EMAIL="bot@auto-commit.local"
 
-# Git 仓库远程地址
-REMOTE_URL="https://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@github.com/ouhaibo1980/my-tvbxo.git"
+# Git 仓库远程地址（使用 SSH）
+REMOTE_URL="git@github.com:ouhaibo1980/my-tvbxo.git"
 
 # 监控的目录（当前目录）
 WATCH_DIR="."
