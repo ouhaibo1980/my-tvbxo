@@ -136,13 +136,20 @@ Production branch: main
 Framework preset: Next.js
 ```
 
-**构建设置：**
+**构建设置（⚠️ 重要）：**
 
 ```
 Build command: npm run build
 Build output directory: .next
 Root directory: (留空)
+Deploy command: (留空) ⚠️ 不要填写任何内容！
 ```
+
+**⚠️ 关键说明**：
+- ✅ **Build command**: `npm run build` - 必须填写
+- ✅ **Build output directory**: `.next` - 填写 `.next` 目录
+- ❌ **Deploy command**: **必须留空** - Cloudflare Pages 会自动部署，不需要手动指定部署命令
+- ❌ **不要填写** `npx wrangler deploy` 或其他部署命令
 
 **环境变量（重要）：**
 
@@ -326,7 +333,21 @@ export default function NotFound() {
 
 #### Cloudflare Pages 故障排除
 
-**问题 1：构建失败**
+**问题 1：Missing entry-point to Worker script or to assets directory**
+
+```bash
+错误：[ERROR] Missing entry-point to Worker script or to assets directory
+原因：错误使用了 wrangler deploy 命令
+解决方案：
+1. 进入项目设置 → Builds & deployments → Edit configurations
+2. 清空 "Deploy command" 字段（不要填写任何内容）
+3. 保留 "Build command" 为 npm run build
+4. 保留 "Build output directory" 为 .next
+5. 保存更改并重新部署
+6. 或者参考文档顶部的"快速修复"部分
+```
+
+**问题 2：构建失败**
 
 ```bash
 错误：Build failed
@@ -334,10 +355,11 @@ export default function NotFound() {
 解决：
 1. 检查 package.json 的 build 命令
 2. 查看 Cloudflare Pages 的构建日志
-3. 确认 Node.js 版本设置正确
+3. 确认 Node.js 版本设置正确（NODE_VERSION=20）
+4. 检查 package-lock.json 是否存在
 ```
 
-**问题 2：部署成功但网站无法访问**
+**问题 3：部署成功但网站无法访问**
 
 ```bash
 错误：404 Not Found
@@ -346,9 +368,10 @@ export default function NotFound() {
 1. 检查 "Build output directory" 设置
 2. Next.js 应该设置为 `.next`
 3. 或留空让 Cloudflare 自动检测
+4. 检查根目录设置是否正确
 ```
 
-**问题 3：环境变量未生效**
+**问题 4：环境变量未生效**
 
 ```bash
 错误：环境变量读取失败
@@ -356,7 +379,32 @@ export default function NotFound() {
 解决：
 1. 前往项目设置 → Environment variables
 2. 添加需要的环境变量
-3. 重新部署项目
+3. 区分 Production 和 Preview 环境
+4. 重新部署项目
+```
+
+**问题 5：TypeScript 编译错误**
+
+```bash
+错误：TypeScript compilation failed
+原因：类型错误或配置问题
+解决：
+1. 本地运行 npm run build 检查
+2. 检查 tsconfig.json 配置
+3. 修复类型错误后重新提交代码
+4. 使用 // @ts-ignore 临时绕过（不推荐）
+```
+
+**问题 6：依赖安装超时**
+
+```bash
+错误：npm install timeout
+原因：网络问题或依赖过大
+解决：
+1. 增加 Cloudflare Pages 的构建超时时间（在项目设置中）
+2. 检查 package.json 的依赖版本
+3. 使用 .npmrc 配置镜像源（不推荐 Cloudflare Pages）
+4. 优化依赖大小，移除不必要的包
 ```
 
 ---
