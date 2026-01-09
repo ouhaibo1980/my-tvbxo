@@ -112,15 +112,13 @@ $(git status --short)"
 log "开始监控文件变化..."
 log "按 Ctrl+C 停止监控"
 
-# 构建排除参数
-EXCLUDE_PATTERN=""
+# 构建排除模式（正则表达式）
+# 将逗号分隔的目录转换为正则表达式：node_modules|.next|\.git|downloads
 IFS=',' read -ra DIRS <<< "$IGNORE_DIRS"
-for dir in "${DIRS[@]}"; do
-    EXCLUDE_PATTERN="$EXCLUDE_PATTERN --exclude '$dir'"
-done
+EXCLUDE_PATTERN=$(IFS='|'; echo "${DIRS[*]}")
 
 # 使用 inotifywait 监控
-eval "inotifywait -m -r -e modify,create,delete,move $EXCLUDE_PATTERN $WATCH_DIR" | while read -r directory events filename; do
+inotifywait -m -r -e modify,create,delete,move --exclude "$EXCLUDE_PATTERN" "$WATCH_DIR" | while read -r directory events filename; do
     # 组合完整事件信息
     local full_path="${directory}${filename}"
     handle_change "$full_path - $events"
