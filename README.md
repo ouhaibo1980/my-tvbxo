@@ -143,3 +143,82 @@ pnpm start
 - `.coze` 文件是项目启动和部署的唯一依赖，请勿随意修改
 - 开发环境默认运行在 5000 端口
 - 代码修改会自动触发热更新（HMR）
+
+## 自动监控推送
+
+### 功能说明
+
+项目已配置自动监控推送功能，使用 `inotifywait` 实时监控文件变化，自动提交并推送到 GitHub。
+
+### 管理命令
+
+使用 `manage-auto-commit.sh` 管理自动监控：
+
+```bash
+# 启动自动监控
+./manage-auto-commit.sh start
+
+# 停止自动监控
+./manage-auto-commit.sh stop
+
+# 查看运行状态
+./manage-auto-commit.sh status
+
+# 查看日志
+./manage-auto-commit.sh logs
+
+# 重启自动监控
+./manage-auto-commit.sh restart
+```
+
+### 工作原理
+
+1. **实时监控**：使用 `inotifywait` 监控文件系统变化
+2. **智能过滤**：自动忽略 `node_modules`、`.next`、`.git`、`downloads` 等目录
+3. **防抖动**：30 秒防抖时间，避免频繁提交
+4. **自动提交**：检测到变化后自动提交并推送
+
+### 配置文件
+
+- **主脚本**：`auto-commit.sh` - 自动监控和推送逻辑
+- **管理脚本**：`manage-auto-commit.sh` - 启动/停止/状态管理
+- **日志文件**：`/tmp/auto-commit.log` - 运行日志
+
+### 自定义配置
+
+编辑 `auto-commit.sh` 可以修改：
+
+```bash
+# Git 用户信息
+GIT_NAME="Auto Commit Bot"
+GIT_EMAIL="bot@auto-commit.local"
+
+# 忽略的目录（逗号分隔）
+IGNORE_DIRS="node_modules,.next,.git,downloads"
+
+# 防抖动时间（秒）
+DEBOUNCE_SECONDS=30
+
+# 日志文件
+LOG_FILE="/tmp/auto-commit.log"
+```
+
+### GitHub 仓库
+
+- **仓库地址**：https://github.com/ouhaibo1980/my-tvbxo
+- **分支**：main
+- **自动推送**：已配置
+
+### 使用场景
+
+- ✅ 实时备份项目代码
+- ✅ 自动同步数据文件
+- ✅ 持续开发版本管理
+- ✅ 多设备代码同步
+
+### 注意事项
+
+- 确保 Git Token 有 `repo` 权限
+- 监控脚本在后台运行，重启系统后需要手动启动
+- 大量文件变化时可能需要较长时间处理
+- 建议定期检查日志确保正常运行
