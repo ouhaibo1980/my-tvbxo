@@ -97,6 +97,8 @@ Deploy command: (留空) ⚠️ 必须留空！
 
 ### 🚨 快速修复：Cloudflare Pages 部署失败
 
+#### 错误 1：Missing entry-point to Worker script
+
 如果遇到 `Missing entry-point to Worker script or to assets directory` 错误：
 
 **问题原因**：错误使用了 `npx wrangler deploy` 命令。
@@ -116,7 +118,34 @@ Deploy command: (留空) ⚠️ 必须留空！
 8. 点击 **Save** 保存更改
 9. 触发一次新的部署（推送代码或手动触发）
 
-**详细文档**：请查看 [DEPLOYMENT.md](DEPLOYMENT.md)
+---
+
+#### 错误 2：Next.js: not found
+
+如果遇到 `/bin/sh: 1: Next.js: not found` 错误：
+
+**问题原因**：Build command 错误地填写为 "Next.js" 而不是 `npm run build`。
+
+**解决方案（1 分钟内完成）**：
+
+1. 登录 [Cloudflare Dashboard](https://dash.cloudflare.com/)
+2. 进入 **Workers & Pages** → 选择您的项目 **my-tvbxo**
+3. 点击 **Settings** 标签页
+4. 找到 **Builds & deployments** 部分
+5. 点击 **Edit configurations**
+6. **修改** "Build command" 字段：
+   - ❌ 删除：`Next.js`（错误）
+   - ✅ 改为：`npm run build`（正确）
+7. 确认其他配置：
+   - ✅ **Build output directory**: `.next`（或留空）
+   - ✅ **Root directory**: (留空)
+   - ✅ **Deploy command**: (留空)
+8. 点击 **Save** 保存更改
+9. 触发一次新的部署（推送代码或手动触发）
+
+**详细文档**：
+- [CLOUDFLARE-PAGES-CONFIG.md](CLOUDFLARE-PAGES-CONFIG.md) - 详细配置指南
+- [DEPLOYMENT.md](DEPLOYMENT.md) - 完整部署指南
 
 ### 方案二：自己的服务器部署
 
