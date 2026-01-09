@@ -48,6 +48,8 @@ pnpm start
 - ✅ 全球 CDN 加速
 - ✅ 免费 SSL 证书
 - ✅ 自动从 GitHub 部署
+
+**📋 详细配置指南**：请查看 [CLOUDFLARE-PAGES-CONFIG.md](CLOUDFLARE-PAGES-CONFIG.md) 了解详细的配置步骤和常见错误修复。
 - ✅ 支持自定义域名
 
 #### 部署步骤
