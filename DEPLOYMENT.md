@@ -10,19 +10,18 @@
 
 如果您正在尝试修复 Cloudflare Pages 部署问题，**请首先阅读**：
 
-### 📄 [QUICK-FIX.md](QUICK-FIX.md) - 30 秒快速修复指南
+### 📄 [QUICK-FIX.md](QUICK-FIX.md) - 30 秒快速修复指南（新版界面）
 
 这个文档包含：
-- 🔴 当前错误的解决方案
-- ✅ 正确的配置步骤
+- 🔴 新版界面的配置要求
+- ✅ 正确的部署命令：`wrangler pages deploy .next`
 - 🎯 详细的配置示例
 - 📋 配置检查清单
 
-**⚠️ 重要**：修复 Cloudflare Pages 部署的关键是**完全清空 "Deploy command" 字段**！
-
----
+**⚠️ 重要**：新版 Cloudflare Pages 要求**部署命令为 `wrangler pages deploy .next`**！
 
 **📋 更多信息**：
+- [CLOUDFLARE-PAGES-NEW-UI.md](CLOUDFLARE-PAGES-NEW-UI.md) - 新版界面详细配置指南
 - [CLOUDFLARE-PAGES-CONFIG.md](CLOUDFLARE-PAGES-CONFIG.md) - 详细的配置步骤和常见错误
 - [QUICK-FIX.md](QUICK-FIX.md) - 快速修复指南（推荐首先阅读）
 
