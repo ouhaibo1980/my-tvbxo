@@ -147,7 +147,8 @@ Cloudflare Pages 界面已更新，配置方式如下：
 
 部署前，请确认：
 
-- [ ] **部署命令** 是 `wrangler pages deploy .next`（不是 `npx wrangler deploy`）
+- [ ] **部署命令** 是 `npx wrangler pages deploy .next`（必须有 `npx`）
+- [ ] **部署命令** 包含 `pages deploy`（不是单独的 `deploy`）
 - [ ] **构建命令** 是 `pnpm run build` 或 `npm run build`
 - [ ] **项目名称** 是 `my-tvbxo`
 
@@ -180,19 +181,31 @@ ls -la .next
 
 ## 🚨 故障排除
 
-### 问题 1：Workers-specific command 错误
+### 问题 1：wrangler: not found 错误
+
+```
+/bin/sh: 1: wrangler: not found
+```
+
+**原因**：部署命令缺少 `npx`
+
+**解决**：
+1. 将部署命令改为 `npx wrangler pages deploy .next`
+2. 必须包含 `npx`
+
+### 问题 2：Workers-specific command 错误
 
 ```
 ✘ [ERROR] It looks like you've run a Workers-specific command in a Pages project.
 ```
 
-**原因**：部署命令使用了 `npx wrangler deploy`
+**原因**：部署命令使用了 `npx wrangler deploy`（缺少 `pages` 子命令）
 
 **解决**：
-1. 将部署命令改为 `wrangler pages deploy .next`
-2. 不要使用 `npx wrangler deploy`
+1. 将部署命令改为 `npx wrangler pages deploy .next`
+2. 必须包含 `pages deploy`
 
-### 问题 2：构建失败
+### 问题 3：构建失败
 
 ```
 Error: Build failed
@@ -205,7 +218,7 @@ Error: Build failed
 2. 查看构建日志中的错误信息
 3. 修复代码问题后重新提交
 
-### 问题 3：找不到 .next 目录
+### 问题 4：找不到 .next 目录
 
 ```
 Error: Directory .next not found
@@ -227,7 +240,16 @@ Error: Directory .next not found
 | 命令类型 | Workers | Pages | 本项目使用 |
 |----------|---------|-------|-----------|
 | 构建命令 | `npm run build` | `npm run build` | ✅ 使用 |
-| 部署命令 | `npx wrangler deploy` | `wrangler pages deploy .next` | ✅ 使用 Pages 命令 |
+| 部署命令 | `npx wrangler deploy` | `npx wrangler pages deploy .next` | ✅ 使用 Pages 命令 |
+
+### 为什么需要 npx？
+
+| 命令 | 说明 | 是否可用 |
+|------|------|----------|
+| `wrangler` | 全局安装的 wrangler CLI | ❌ 未安装 |
+| `npx wrangler` | 使用 npx 运行 wrangler | ✅ 可用 |
+
+`npx` 是 Node.js 的包执行器，会自动下载并运行指定的包，不需要预先安装。
 
 ### 为什么项目类型很重要？
 
@@ -249,7 +271,7 @@ Executing user build command: pnpm run build
 ✓ Compiled successfully in 4.2s
 ✓ Generating static pages (6/6)
 Success: Build command completed
-Executing user deploy command: wrangler pages deploy .next
+Executing user deploy command: npx wrangler pages deploy .next
 Uploading .next to Cloudflare Pages...
 Success: Deployed!
 ```
