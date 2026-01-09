@@ -88,12 +88,13 @@ pnpm start
 **第四步：配置构建设置（⚠️ 重要）**
 
 ```
-Framework preset: Next.js
 Build command: npm run build
 Build output directory: .next
 Root directory: (留空)
 Deploy command: (留空) ⚠️ 必须留空！
 ```
+
+**注意**：Cloudflare Pages 会自动检测 Next.js 框架，不需要手动选择 Framework preset。
 
 **⚠️ 关键注意事项：**
 - ✅ **Build command**: `npm run build` - 必须填写

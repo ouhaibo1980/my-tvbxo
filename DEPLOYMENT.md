@@ -188,8 +188,9 @@ Cloudflare Pages 会尝试自动检测项目类型，但我们需要手动配置
 ```
 Project name: my-tvbxo
 Production branch: main
-Framework preset: Next.js
 ```
+
+**注意**：Cloudflare Pages 会自动检测 Next.js 框架，不需要手动选择 Framework preset。
 
 **构建设置（⚠️ 重要）：**
 
