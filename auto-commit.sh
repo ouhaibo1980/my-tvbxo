@@ -120,6 +120,6 @@ EXCLUDE_PATTERN=$(IFS='|'; echo "${DIRS[*]}")
 # 使用 inotifywait 监控
 inotifywait -m -r -e modify,create,delete,move --exclude "$EXCLUDE_PATTERN" "$WATCH_DIR" | while read -r directory events filename; do
     # 组合完整事件信息
-    local full_path="${directory}${filename}"
+    full_path="${directory}${filename}"
     handle_change "$full_path - $events"
 done
